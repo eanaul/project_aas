@@ -37,7 +37,7 @@ if (isset($_POST['submit'])) {
             echo "<script>
             alert('Berhasil di daftar!')
             </script>";
-            header("location: login.php");
+            header("location: index.php");
         } else {
             echo "Error: " . $sql . "<br>" . mysqli_error($conn);
         }
@@ -106,7 +106,7 @@ if (isset($_POST['submit'])) {
   </div>
   <div class="form-group">
     <label for="nama">Nama Lengkap</label>
-    <input type="text" class="form-control" name="nama" id="nama" placeholder="ex: Mike Bajaj">
+    <input type="text" class="form-control" name="nama" id="nama" placeholder="ex: Ehan Kopling">
   </div>
   <div class="form-group">
     <label for="nis">NIS</label>
@@ -135,7 +135,7 @@ if (isset($_POST['submit'])) {
   <button type="submit" name="submit" class="btn btn-primary">Sign in</button>
 </form>
 <div class="ms-2 mt-3">
-                  <p>Sudah punya akun? <a href="login.php">Login</a></p>
+                  <p>Sudah punya akun? <a href="index.php">Login</a></p>
                   </div>
                   </form>
                 </div>

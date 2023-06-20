@@ -1,12 +1,12 @@
 <?php
+
 session_start();
-  if (!isset($_SESSION["username"])) {
-	  echo "<script>alert('Anda Harus Login Terlebih Dahulu!');</script>";
-    echo "<script>window.location.href = 'index.php';</script>";
-	exit;
+if (!isset($_SESSION["username"])) {
+  echo "<script>alert('Anda Harus Login Terlebih Dahulu!');</script>";
+  echo "<script>window.location.href = 'index.php';</script>";
+exit;
 }
-?>
-  <?php
+
   $server = mysqli_connect("localhost", "root", "", "peminjaman");
 
   if ($server) {
@@ -15,6 +15,39 @@ session_start();
     echo "Gagal";
   }
 
+    if(isset($_POST["submit"])){
+
+    $nis = $_POST['nis']; //tangkap variabel yang tadi dikirim dengan <form>
+    $nama = $_POST['nama'];
+    $rombel = $_POST['rombel'];
+    $rayon = $_POST['rayon'];
+    $username = $_POST['username'];
+    $pass = $_POST['pass'];
+    $img = $_POST['img'];
+
+
+    $cuy = "UPDATE `data` SET `nis`='$nis',`nama`='$nama',`rombel`='$rombel',`rayon`='$rayon',`username`='$username',`pass`='$pass',`img`='$img' WHERE `username` = '$username'";
+$myquery = mysqli_query($server, $cuy);
+
+
+
+if($myquery) {
+    echo "
+    <script>
+    alert('Data berhasil diubah!');
+    document.location.href = 'utama.php';
+    </script>
+    ";
+} else {
+    echo "
+    <script>
+    alert('Data gagal ditambah cuy!')
+    </script>
+    ";
+}
+
+}
+
   $sql    = ("SELECT * FROM data WHERE username='$_SESSION[username]'");
   $result = mysqli_query($server, $sql);
   ?>
@@ -22,17 +55,20 @@ session_start();
   <?php
 
 
+
   if (mysqli_num_rows($result) > 0) {
 
     while ($tampil = mysqli_fetch_assoc($result)) {
   ?>
+
+
 
 <!doctype html>
 <html lang="en">
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Dashboard</title>
+    <title>Edit</title>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,300,0,0" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -41,14 +77,47 @@ session_start();
     <link rel="icon" href="img/fire.png">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <style>
-       *{
+      * {
         font-family: 'Raleway', sans-serif;
-       }
-        .nav-pills li-a:hover{
-            background-color: blue;
-        }
+      }
+      
+      html, body {
+        height: 100%;
+        margin: 0;
+        overflow: hidden;
+      }
+      
+      .container {
+        height: 100%;
+        display: flex;
+        margin-top: 20px;
 
-        .loader-wrapper {
+      }
+      
+      .form-container {
+        max-width: 400px;
+        padding: 20px;
+
+        border-radius: 5px;
+      }
+      
+      .form-container input[type="file"] {
+        overflow: hidden;
+      }
+      
+      .form-container button[type="submit"] {
+        width: 100%;
+      }
+      
+      .form-container label {
+        margin-bottom: 5px;
+      }
+      
+      .form-container .form-group {
+        margin-bottom: 15px;
+      }
+
+      .loader-wrapper {
   width: 100%;
   height: 100%;
   position: absolute;
@@ -120,10 +189,10 @@ session_start();
     height: 0%;
   }
 }
-        
     </style>
-</head>
+  </head>
   <body>
+
   <div class="container-fluid">
     <div class="row flex-nowrap">
       <div class="bg-primary col-auto col-md-4 col-lg-2 min-vh-100 d-flex flex-column justify-content-between">
@@ -171,6 +240,7 @@ session_start();
           </a>
             </li>
           </ul>
+          
         </div>
         <div class="logout text-white">
           <a href="logout.php" class="nav-link text-white">
@@ -182,88 +252,61 @@ session_start();
     </div>
 
 
-  <div class="col-md-5 col-lg-8">
+    <div class="col-md-5 col-lg-8">
             <div class="row">
-              <div class="col-md-12 mt-5 ms-3 mb-5">
-                <h4>Selamat Datang di Wes<span class="jud1 text-primary">Bluemarine</span>!</h4>
-                <h1><?php echo $tampil['nama']; ?></h1>
-                <h4><?php echo $tampil['rayon']; ?> | <?php echo $tampil['rombel']; ?> | <?php echo $tampil['nis']; ?></h4>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-md-12 mt-5 mb-5 ms-3">
-                <h1>Mau Pinjam Apa Hari Ini?</h1>
+              <div class="col-md-12 mt-5  ms-3 fw-3">
+                <h1 style="font-size: 50px;">Edit data anda disini!</span></h1>
                 <hr class="border border-secondary border-2 opacity-50">
               </div>
             </div>
-            <div class="row ms-3">
-              <div class="col-md-3 col-lg-3">
-                <div class="card" style="width: 15rem;">
-                  <img class="card-img-top" src="img/lepi.webp" alt="Card image cap">
-                  <div class="card-body">
-                    <h5 class="card-title">Laptop Lenovo</h5>
-                    <p class="card-text">Build quality lohnopo yang bagus tak terkalahkan dan terjamin.</p>
-                    <a href="jenis_laptop/lohnopo.php" class="btn btn-primary">Cek Peminjaman</a>
-                  </div>
-                </div>
-              </div>
-              <div class="col-md-3 col-lg-3">
-                <div class="card" style="width: 15rem;">
-                  <img class="card-img-top" src="img/lepi.webp" alt="Card image cap">
-                  <div class="card-body">
-                    <h5 class="card-title">Laptop Acer</h5>
-                    <p class="card-text">Pacer ga kalah bagus, tapi ga terlalu bagus dari merek lohnopo.</p>
-                    <a href="jenis_laptop/pacer.php" class="btn btn-primary">Cek Peminjaman</a>
-                  </div>
-                </div>
-              </div>
-              <div class="col-md-3 col-lg-3">
-                <div class="card" style="width: 15rem;">
-                  <img class="card-img-top" src="img/lepi.webp" alt="Card image cap">
-                  <div class="card-body">
-                    <h5 class="card-title">Laptop ASUS</h5>
-                    <p class="card-text">Laptop sejuta umat, ini keren bikin user jadi keceh bak badai berlalu</p>
-                    <a href="jenis_laptop/oasis.php" class="btn btn-primary">Cek Peminjaman</a>
-                  </div>
-                </div>
-              </div>
-              <div class="col-md-3 col-lg-3">
-                <div class="card" style="width: 15rem;">
-                  <img class="card-img-top" src="img/lepi.webp" alt="Card image cap">
-                  <div class="card-body">
-                    <h5 class="card-title">Laptop HP</h5>
-                    <p class="card-text">Laptop bagus, sering dipake programmer kece seperti asep</p>
-                    <a href="jenis_laptop/ehape.php" class="btn btn-primary">Cek Peminjaman</a>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
+
+
+
+            <div class="container">
+  <div class="form-container">
+    <form action="" method="POST">
+      <div class="form-row">
+        <div class="form-group col-md-10">
+          <label for="username">Username</label>
+          <input type="text" class="form-control" name="username" id="username" value="<?= $tampil['username']; ?>">
+        </div>
+        <div class="form-group col-md-6">
+          <label for="inputPassword4">Password</label>
+          <input type="text" class="form-control" name="pass" id="inputPassword4" value="<?= $tampil['pass']; ?>">
         </div>
       </div>
-
-    
-      <?php
-
-  } 
-
-}
-
-  ?>
-
-
-<div class="loader-wrapper">
-    <span class="loader"><span class="loader-inner"></span></span>
+      <div class="form-row">
+        <div class="form-group col-md-12">
+          <label for="nama">Nama Lengkap</label>
+          <input type="text" class="form-control" name="nama" id="nama" value="<?= $tampil['nama']; ?>">
+        </div>
+        <div class="form-group col-md-12">
+          <label for="nis">NIS</label>
+          <input type="number" class="form-control" name="nis" id="nis" value="<?= $tampil['nis']; ?>">
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group col-md-12">
+          <label for="rombel">Rombel</label>
+          <input type="text" class="form-control" name="rombel" id="rombel" value="<?= $tampil['rombel']; ?>">
+        </div>
+        <div class="form-group col-md-12">
+          <label for="rayon">Rayon</label>
+          <input type="text" class="form-control" name="rayon" id="rayon" value="<?= $tampil['rayon']; ?>">
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="img">Gambar</label>
+        <input type="file" class="form-control" name="img" id="img" value="<?= $tampil['img']; ?>">
+      </div>
+      <div class="form-group col-md-6">
+      <button type="submit" name="submit" class="btn btn-primary">Ubah</button>
+      </div>
+    </form>
   </div>
+</div>
 
- <script>
-    $(window).on("load",function(){
-      $(".loader-wrapper").fadeOut("slow");
-    });
-  </script>
-
-      
-
+    </div>
 
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js" integrity="sha384-fbbOQedDUMZZ5KreZpsbe1LCZPVmfTnH7ois6mU1QK+m14rQ1l2bGBq41eYeM/fS" crossorigin="anonymous"></script>
@@ -277,9 +320,13 @@ session_start();
       $(".loader-wrapper").fadeOut("slow");
     });
   </script>
-  </body>
+</body>
 </html>
 
-        
+<?php
 
+} 
 
+}
+
+?>

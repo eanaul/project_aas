@@ -1,4 +1,4 @@
-  <?php
+<?php
 
 session_start();
 if (!isset($_SESSION["username"])) {
@@ -17,7 +17,6 @@ exit;
 
   $sql    = ("SELECT * FROM data WHERE username='$_SESSION[username]'");
   $result = mysqli_query($server, $sql);
-  
   ?>
 
   <?php
@@ -26,8 +25,6 @@ exit;
   if (mysqli_num_rows($result) > 0) {
 
     while ($tampil = mysqli_fetch_assoc($result)) {
-
-      $gambar = $tampil['img'];
   ?>
 
 
@@ -38,53 +35,50 @@ exit;
         <div class="bg-primary p-2">
           <a class="text-decoration-none mt-1 align-items-center text-white">
             <span class="fs-4 d-none d-sm-inline text-center">
-              <a href="edit.php">
-                  <img class="rounded mx-auto d-block mt-5 mb-5" src="img/1255974.png" alt="" width="150px">
-              </a>
+              <img class="rounded mx-auto d-block mt-5 mb-5" src="../img/1255974.png" alt="" width="150px">
             </span>
           </a>
           <hr class="border border-white border-2 opacity-50">
           <ul class="nav nav-pills flex-column mt-4">
             <li class="nav-item py-2 py-sm-0">
-              <a href="utama.php" class="nav-link  text-white">
+              <a href="../utama.php" class="nav-link  text-white">
                 <span class="material-symbols-outlined">
                   home
                 </span><span class="fs-4 d-none ms-2 d-sm-inline">Utama</span>
               </a>
             </li>
             <li class="nav-item py-2 py-sm-0 mt-3">
-              <a href="jenis_laptop/lohnopo.php" class="nav-link text-white">
+              <a href="lohnopo.php" class="nav-link text-white">
                 <span class="material-symbols-outlined">
                   check_circle
                 </span><span class="fs-4 d-none ms-2 d-sm-inline">Peminjaman</span>
               </a>
             </li>
             <li class="nav-item py-2 py-sm-0 mt-3">
-              <a href="contact.php" class="nav-link text-white">
+              <a href="../contact.php" class="nav-link text-white">
                 <span class="material-symbols-outlined">
                   phone_in_talk
                 </span><span class="fs-4 d-none ms-2 d-sm-inline">Contact</span>
               </a>
             </li>
             <li class="nav-item py-2 py-sm-0 mt-3">
-              <a href="dipinjam.php" class="nav-link text-white">
+              <a href="../dipinjam.php" class="nav-link text-white">
               <span class="material-symbols-outlined">
                   radio_button_checked
               </span><span class="fs-4 d-none ms-2 d-sm-inline">Dipinjam</span>
               </a>
             </li>
             <li class="nav-item py-2 py-sm-0 mt-3">
-            <a href="edit.php" class="nav-link text-white">
+            <a href="../edit.php" class="nav-link text-white">
           <span class="material-symbols-outlined">
               settings
           </span> <span class="fs-4 d-none ms-2 d-sm-inline">Pengaturan</span>
           </a>
             </li>
           </ul>
-          
         </div>
         <div class="logout text-white">
-          <a href="logout.php" class="nav-link text-white">
+          <a href="../logout.php" class="nav-link text-white">
             <span class="material-symbols-outlined">
               logout
             </span><span class="fs-4 d-none ms-2 d-sm-inline">Logout</span>

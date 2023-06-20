@@ -1,9 +1,10 @@
+
 <!doctype html>
 <html lang="en">
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Hubungi</title>
+    <title>Dipinjam</title>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,300,0,0" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -98,38 +99,60 @@
 
   <?php include 'navbar.php'; ?>
 
-  <div class="col-md-9 mt-5 mb-5 ms-5">
-<div class="card text-center">
-    <div class="card-header">
-      <ul class="nav nav-tabs card-header-tabs">
-        <li class="nav-item">
-          <a class="nav-link active" aria-current="true" href="#">Info</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="https://www.linkedin.com/in/reyhan-aulia-treeana-24063a25b/" target="_blank">LinkedIn</a>
-        </li>
-      </ul>
-    </div>
-    <div class="card-body">
-      <h5 class="card-title">Tentang Pembuat</h5>
-      <span class="material-symbols-outlined">
-        info
-        </span>
-      <p class="card-text">Website ini dibuat oleh seorang anak bernama Reyhan Aulia treeana. Lahir di Cicurug pada 3 desember 2006,
-        dilahirkan sebagai anak bungsu (terakhir), dengan 2 orang kakak perempuan. Karena hal itu, sifatnya memiliki sedikit unsur unsur feminisme.
-        Tetapi sepertinya sekarang sudah tidak, dia tumbuh menjadi pria tangguh sekarang. Saat ini dia bersekolah di SMK Wikrama Bogor, berbekal rasa ingin tahu yang tinggi,
-        dia mencoba untuk menaiki puncak sebagai murid yang hebat. Motivasi dan rasa tidak ingin mengecewakan orang tua, dia sangat ingin belajar sungguh sungguh, Memiliki cita-cita untuk pulang kerumah
-        dengan sebuah senyuman.
-      </p>
-      <a href="https://www.instagram.com/ryhaanau/" class="btn btn-primary" target="_blank">Hubungi</a>
+  <?php
 
+$cuy    = ("SELECT * FROM `borrow`");
+$hasil = mysqli_query($server, $cuy);
+
+?>
+
+    <div class="col-md-9 mt-5 mb-5 ms-5">
+    <div class="row">
+            <div class="col-md-12 mb-5 ">
+            <h1>Data Laptop Dipinjam</h1>
     </div>
+    <table class="table">
+  <thead>
+    <tr>
+      <th scope="col">Jenis Laptop</th>
+      <th scope="col">Tanggal</th>
+      <th scope="col">Alasan Peminjaman</th>
+      <th scope="col">Aksi</th>
+    </tr>
+  </thead>
+  <tbody class="table-group-divider">
+
+  <?php
+  if (mysqli_num_rows($hasil) > 0) {
+    while ($tunjuk = mysqli_fetch_assoc($hasil)) {
+      echo "<tr>";
+      echo "<td>" . $tunjuk['jenis'] . "</td>";
+      echo "<td>" . $tunjuk['tanggal'] . "</td>";
+      echo "<td>" . $tunjuk['alasan'] . "</td>"; ?>
+      <td><a class="btn btn-danger" href="hapus.php?alasan=<?php echo $tunjuk['alasan'] ?>" >Kembalikan</a></td>
+    <?php
+      echo "</tr>";
+    }
+  } else {
+    echo "<tr>";
+    echo "<td colspan='2'>Tidak ada data yang ditemukan.</td>";
+    echo "</tr>";
+  }
+  ?>
+  </tbody>
+</table>
+
+      
+<div class="loader-wrapper">
+    <span class="loader"><span class="loader-inner"></span></span>
   </div>
-</div>
-      
 
+ <script>
+    $(window).on("load",function(){
+      $(".loader-wrapper").fadeOut("slow");
+    });
+  </script>
 
-      
 
 
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
@@ -146,4 +169,5 @@
   </script>
   </body>
 </html>
+
 
